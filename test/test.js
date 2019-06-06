@@ -3,59 +3,32 @@ const sinon = require('sinon');
 const pcsc = require('../lib/pcsclite');
 
 describe('Testing PCSCLite private', function() {
-
     describe('#start()', function() {
-        before(function() {
-            this.clock = sinon.useFakeTimers();
-        });
-
         it('#start() stub', function(done) {
-            var self = this;
             var p = pcsc();
-            var stub = sinon.stub(p, 'start').callsFake(function(my_cb) {
-                var times = 0;
-                setInterval(function() {
-                    switch (++ times) {
+
+            try {
+                var stub = sinon.stub(p, 'start').callsFake(function(startCb) {
+                    startCb(undefined, Buffer.from("ACS ACR122U PICC Interface\u0000ACS ACR122U PICC Interface 01\u0000\u0000"));
+                });
+
+                var readerHit = 0;
+                p.on('reader', function(reader) {
+                    reader.close();
+
+                    switch (++readerHit) {
                         case 1:
-                            my_cb(undefined, Buffer.from("MyReader\0"));
-                            self.clock.tick(1000);
-                        break;
-
+                            reader.name.should.equal("ACS ACR122U PICC Interface");
+                            break;
                         case 2:
-                            my_cb(undefined, Buffer.from("MyReader"));
-                        break;
-
-                        case 3:
-                            my_cb(undefined, Buffer.from("MyReader1\0MyReader2\0"));
-                        break;
+                            reader.name.should.equal("ACS ACR122U PICC Interface 01");
+                            done();
+                            break;
                     }
-                }, 1000);
-                self.clock.tick(1000);
-            });
-
-            var times = 0;
-            p.on('reader', function(reader) {
-                reader.close();
-                switch (++ times) {
-                    case 1:
-                        reader.name.should.equal("MyReader");
-                    break;
-
-                    case 2:
-                        reader.name.should.equal("MyReader1");
-                    break;
-
-                    case 3:
-                        reader.name.should.equal("MyReader2");
-                        p.close();
-                        done();
-                    break;
-                }
-            });
-        });
-
-        after(function() {
-            this.clock.restore();
+                });
+            } finally {
+                p.close();
+            }
         });
     });
 });
