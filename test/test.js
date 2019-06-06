@@ -12,7 +12,7 @@ describe('Testing PCSCLite private', function() {
         it('#start() stub', function(done) {
             var self = this;
             var p = pcsc();
-            var stub = sinon.stub(p, 'start', function(my_cb) {
+            var stub = sinon.stub(p, 'start').callsFake(function(my_cb) {
                 var times = 0;
                 setInterval(function() {
                     switch (++ times) {
@@ -64,7 +64,7 @@ describe('Testing CardReader private', function() {
 
     var get_reader = function() {
         var p = pcsc();
-        var stub = sinon.stub(p, 'start', function(my_cb) {
+        var stub = sinon.stub(p, 'start').callsFake(function(my_cb) {
             /* "MyReader\0" */
             my_cb(undefined, new Buffer("MyReader\0"));
         });
@@ -77,7 +77,7 @@ describe('Testing CardReader private', function() {
         it('#_connect() success', function(done) {
             var p = get_reader();
             p.on('reader', function(reader) {
-                var connect_stub = sinon.stub(reader, '_connect', function(share_mode,
+                var connect_stub = sinon.stub(reader, '_connect').callsFake(function(share_mode,
                                                                            protocol,
                                                                            connect_cb) {
                     connect_cb(undefined, 1);
@@ -95,7 +95,7 @@ describe('Testing CardReader private', function() {
             var p = get_reader();
             p.on('reader', function(reader) {
                 var cb = sinon.spy();
-                var connect_stub = sinon.stub(reader, '_connect', function(share_mode,
+                var connect_stub = sinon.stub(reader, '_connect').callsFake(function(share_mode,
                                                                            protocol,
                                                                            connect_cb) {
                     connect_cb("");
@@ -128,7 +128,7 @@ describe('Testing CardReader private', function() {
             p.on('reader', function(reader) {
                 reader.connected = true;
                 var cb = sinon.spy();
-                var connect_stub = sinon.stub(reader, '_disconnect', function(disposition,
+                var connect_stub = sinon.stub(reader, '_disconnect').callsFake(function(disposition,
                                                                               disconnect_cb) {
                     disconnect_cb(undefined);
                 });
@@ -143,7 +143,7 @@ describe('Testing CardReader private', function() {
             p.on('reader', function(reader) {
                 reader.connected = true;
                 var cb = sinon.spy();
-                var connect_stub = sinon.stub(reader, '_disconnect', function(disposition,
+                var connect_stub = sinon.stub(reader, '_disconnect').callsFake(function(disposition,
                                                                               disconnect_cb) {
                     disconnect_cb("");
                 });
@@ -157,7 +157,7 @@ describe('Testing CardReader private', function() {
             var p = get_reader();
             p.on('reader', function(reader) {
                 var cb = sinon.spy();
-                var connect_stub = sinon.stub(reader, '_disconnect', function(disposition,
+                var connect_stub = sinon.stub(reader, '_disconnect').callsFake(function(disposition,
                                                                               disconnect_cb) {
                     disconnect_cb(undefined);
                 });

@@ -44,7 +44,7 @@
   "devDependencies": {
     "mocha": "^6.0.0",
     "should": "^13.2.3",
-    "sinon": "^7.2.4"
+    "sinon": "^7.3.2"
   },
   "gypfile": true
 }
