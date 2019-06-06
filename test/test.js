@@ -39,7 +39,7 @@ describe('Testing CardReader private', function() {
         var p = pcsc();
         var stub = sinon.stub(p, 'start').callsFake(function(my_cb) {
             /* "MyReader\0" */
-            my_cb(undefined, Buffer.from("MyReader\0"));
+            my_cb(undefined, Buffer.from("MyReader\u0000\u0000"));
         });
 
         return p;
