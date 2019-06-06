@@ -64,7 +64,7 @@ describe('Testing CardReader private', function() {
             });
         });
 
-        it('#_connect() error', function() {
+        it('#_connect() error', function(done) {
             var p = get_reader();
             p.on('reader', function(reader) {
                 var cb = sinon.spy();
@@ -76,10 +76,11 @@ describe('Testing CardReader private', function() {
 
                 reader.connect(cb);
                 sinon.assert.calledOnce(cb);
+                done();
             });
         });
 
-        it('#_connect() already connected', function() {
+        it('#_connect() already connected', function(done) {
             var p = get_reader();
             p.on('reader', function(reader) {
                 var cb = sinon.spy();
@@ -88,6 +89,7 @@ describe('Testing CardReader private', function() {
                 reader.connect(cb);
                 process.nextTick(function () {
                     sinon.assert.calledOnce(cb);
+                    done();
                 });
             });
         });
@@ -96,7 +98,7 @@ describe('Testing CardReader private', function() {
 
     describe('#_disconnect()', function() {
 
-        it('#_disconnect() success', function() {
+        it('#_disconnect() success', function(done) {
             var p = get_reader();
             p.on('reader', function(reader) {
                 reader.connected = true;
@@ -108,10 +110,11 @@ describe('Testing CardReader private', function() {
 
                 reader.disconnect(cb);
                 sinon.assert.calledOnce(cb);
+                done();
             });
         });
 
-        it('#_disconnect() error', function() {
+        it('#_disconnect() error', function(done) {
             var p = get_reader();
             p.on('reader', function(reader) {
                 reader.connected = true;
@@ -123,10 +126,11 @@ describe('Testing CardReader private', function() {
 
                 reader.disconnect(cb);
                 sinon.assert.calledOnce(cb);
+                done();
             });
         });
 
-        it('#_disconnect() already disconnected', function() {
+        it('#_disconnect() already disconnected', function(done) {
             var p = get_reader();
             p.on('reader', function(reader) {
                 var cb = sinon.spy();
@@ -138,6 +142,7 @@ describe('Testing CardReader private', function() {
                 reader.disconnect(cb);
                 process.nextTick(function () {
                     sinon.assert.calledOnce(cb);
+                    done();
                 });
             });
         });
