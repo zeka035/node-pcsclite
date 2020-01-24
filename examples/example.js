@@ -39,11 +39,8 @@ pcsc.on('reader', (reader) => {
 
 			});
 
-			return;
-
 		}
-
-		if ((changes & reader.SCARD_STATE_EMPTY) && (status.state & reader.SCARD_STATE_EMPTY)) {
+		else if ((changes & reader.SCARD_STATE_PRESENT) && (status.state & reader.SCARD_STATE_PRESENT)) {
 
 			console.log("card inserted");
 
@@ -71,8 +68,6 @@ pcsc.on('reader', (reader) => {
 
 			});
 
-			// noinspection UnnecessaryReturnStatementJS
-			return;
 		}
 
 	});
