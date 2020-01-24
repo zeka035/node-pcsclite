@@ -46,6 +46,8 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 
 ## Installation
 
+**Supported Node.js versions:** 8.x, 9.x, 10.x, 11.x (12.x and 13.x will be available soon, see PR #27)
+
 1. **Node Native Modules build tools**
 
     Because this library uses Node Native Modules (C++ Addons),
