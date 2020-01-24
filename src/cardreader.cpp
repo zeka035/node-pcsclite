@@ -59,7 +59,7 @@ void CardReader::init(Local<Object> target) {
     Nan::SetPrototypeTemplate(tpl, "SCARD_EJECT_CARD", Nan::New(SCARD_EJECT_CARD));
 
     constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
-    target->Set(Nan::New("CardReader").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
+    Nan::Set(target, Nan::New("CardReader").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
 }
 
 CardReader::CardReader(const std::string &reader_name): m_card_context(0),
@@ -92,8 +92,8 @@ NAN_METHOD(CardReader::New) {
 
     CardReader* obj = new CardReader(*reader_name);
     obj->Wrap(info.Holder());
-    obj->handle()->Set(Nan::New(name_symbol), Nan::To<String>(info[0]).ToLocalChecked());
-    obj->handle()->Set(Nan::New(connected_symbol), Nan::False());
+    Nan::Set(obj->handle(), Nan::New(name_symbol), Nan::To<String>(info[0]).ToLocalChecked());
+    Nan::Set(obj->handle(), Nan::New(connected_symbol), Nan::False());
 
     info.GetReturnValue().Set(info.Holder());
 }
@@ -478,7 +478,7 @@ void CardReader::AfterConnect(uv_work_t* req, int status) {
         Local<Value> argv[argc] = { err };
         Nan::Callback(Nan::New(baton->callback)).Call(argc, argv);
     } else {
-        baton->reader->handle()->Set(Nan::New(connected_symbol), Nan::True());
+        Nan::Set(baton->reader->handle(), Nan::New(connected_symbol), Nan::True());
         const unsigned argc = 2;
         Local<Value> argv[argc] = {
             Nan::Null(),
@@ -533,7 +533,7 @@ void CardReader::AfterDisconnect(uv_work_t* req, int status) {
         Local<Value> argv[argc] = { err };
         Nan::Callback(Nan::New(baton->callback)).Call(argc, argv);
     } else {
-        baton->reader->handle()->Set(Nan::New(connected_symbol), Nan::False());
+        Nan::Set(baton->reader->handle(), Nan::New(connected_symbol), Nan::False());
         const unsigned argc = 1;
         Local<Value> argv[argc] = {
             Nan::Null()

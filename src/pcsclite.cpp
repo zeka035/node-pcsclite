@@ -18,7 +18,7 @@ void PCSCLite::init(Local<Object> target) {
 
 
     constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
-    target->Set(Nan::New("PCSCLite").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
+    Nan::Set(target, Nan::New("PCSCLite").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
 }
 
 PCSCLite::PCSCLite(): m_card_context(0),
