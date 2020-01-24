@@ -6,8 +6,9 @@
 Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** and **Windows**.
 
 > 📌 **Looking for library to work easy with NFC tags?**  
-> take a look at [nfc-pcsc](https://github.com/pokusew/nfc-pcsc) which offers easy to use high level API
-> for detecting / reading and writing NFC tags and cards
+> Then take a look at [nfc-pcsc](https://github.com/pokusew/nfc-pcsc)
+> which offers an easy to use high level API
+> for detecting / reading and writing NFC tags and cards.
 
 
 ## Content
