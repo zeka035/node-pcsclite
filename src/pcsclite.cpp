@@ -6,6 +6,8 @@ using namespace node;
 
 Nan::Persistent<Function> PCSCLite::constructor;
 
+Nan::AsyncResource *PCSCLite::async_resource = new Nan::AsyncResource("PCSCLite_StaticAsyncResource");
+
 void PCSCLite::init(Local<Object> target) {
 
     // Prepare constructor template
@@ -181,10 +183,10 @@ void PCSCLite::HandleReaderStatusChange(uv_async_t *handle, int status) {
             Nan::CopyBuffer(ar->readers_name, ar->readers_name_length).ToLocalChecked()
         };
 
-        Nan::Callback(Nan::New(async_baton->callback)).Call(argc, argv);
+        Nan::Callback(Nan::New(async_baton->callback)).Call(argc, argv, async_resource);
     } else {
         Local<Value> argv[1] = { Nan::Error(ar->err_msg.c_str()) };
-        Nan::Callback(Nan::New(async_baton->callback)).Call(1, argv);
+        Nan::Callback(Nan::New(async_baton->callback)).Call(1, argv, async_resource);
     }
 
     // Do exit, after throwing last events

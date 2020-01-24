@@ -56,6 +56,7 @@ class PCSCLite: public Nan::ObjectWrap {
         uv_cond_t m_cond;
         bool m_pnp;
         int m_state;
+        static Nan::AsyncResource *async_resource;
 };
 
 #endif /* PCSCLITE_H */
