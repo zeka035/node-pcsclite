@@ -22,13 +22,14 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 - [Behavior on different OS](#behavior-on-different-os)
 - [API](#api)
   - [Class: PCSCLite](#class-pcsclite)
-    - [Event:  'error'](#event--error)
-    - [Event:  'reader'](#event--reader)
+    - [Event: `error`](#event-error)
+    - [Event: `reader`](#event-reader)
     - [pcsclite.close()](#pcscliteclose)
+    - [pcsclite.readers](#pcsclitereaders)
   - [Class: CardReader](#class-cardreader)
-    - [Event:  'error'](#event--error-1)
-    - [Event:  'end'](#event--end)
-    - [Event:  'status'](#event--status)
+    - [Event: `error`](#event-error-1)
+    - [Event: `end`](#event-end)
+    - [Event: `status`](#event-status)
     - [reader.connect([options], callback)](#readerconnectoptions-callback)
     - [reader.disconnect(disposition, callback)](#readerdisconnectdisposition-callback)
     - [reader.transmit(input, res_len, protocol, callback)](#readertransmitinput-res_len-protocol-callback)
@@ -36,6 +37,8 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
     - [reader.close()](#readerclose)
 - [FAQ](#faq)
   - [Can I use this library in my Electron app?](#can-i-use-this-library-in-my-electron-app)
+  - [Are prebuilt binaries provided?](#are-prebuilt-binaries-provided)
+  - [Disabling drivers to make pcsclite working on Linux](#disabling-drivers-to-make-pcsclite-working-on-linux)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -43,25 +46,43 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 
 ## Installation
 
-In order to install the package you need to **have installed in the system the
-pcsclite libraries**.
+1. **Node Native Modules build tools**
 
-In **macOS** and **Windows** you **don't have to install** anything.
+    Because this library uses Node Native Modules (C++ Addons),
+    which are automatically built (using [node-gyp](https://github.com/nodejs/node-gyp))
+    when installing via npm or yarn, you need to have installed **C/C++ compiler
+    toolchain and some other tools** depending on your OS.
+    
+    **Please refer to the [node-gyp > Installation](https://github.com/nodejs/node-gyp#installation)**
+    for the list of required tools depending on your OS and steps how to install them.
 
-> For example, in Debian/Ubuntu:
-> ```bash
-> apt-get install libpcsclite1 libpcsclite-dev
-> ```
-> To run any code you will also need to have installed the pcsc daemon:
-> ```bash
-> apt-get install pcscd
-> ```
+2. **PC/SC API in your OS**
 
-Once you have all needed libraries, you can install using npm:
+    On **macOS** and **Windows** you **don't have to install** anything,
+    **pcsclite API** is provided by the OS.
+    
+    On Linux/UNIX you'd probably need to install pcsclite library and deamon**.
 
-```bash
-npm install @pokusew/pcsclite --save
-```
+    > For example, in Debian/Ubuntu:
+    > ```bash
+    > apt-get install libpcsclite1 libpcsclite-dev
+    > ```
+    > To run any code you will also need to have installed the pcsc daemon:
+    > ```bash
+    > apt-get install pcscd
+    > ```
+
+3. Once you have all needed libraries, you can install node-pcsclite using npm:
+
+    ```bash
+    npm install @pokusew/pcsclite --save
+    ```
+    
+    or using Yarn:
+    
+    ```bash
+    yarn add @pokusew/pcsclite
+    ```
 
 
 ## Example
@@ -164,11 +185,11 @@ TODO document
 
 The PCSCLite object is an EventEmitter that notifies the existence of Card Readers.
 
-#### Event:  'error'
+#### Event: `error`
 
 * *err* `Error Object`. The error.
 
-#### Event:  'reader'
+#### Event: `reader`
 
 * *reader* `CardReader`. A CardReader object associated to the card reader detected
 
@@ -186,15 +207,15 @@ An object containing all detected readers by name. Updated as readers are attach
 
 The CardReader object is an EventEmitter that allows to manipulate a card reader.
 
-#### Event:  'error'
+#### Event: `error`
 
 * *err* `Error Object`. The error.
 
-#### Event:  'end'
+#### Event: `end`
 
 Emitted when the card reader has been removed.
 
-#### Event:  'status'
+#### Event: `status`
 
 * *status* `Object`.
     * *state* The current status of the card reader as returned by [`SCardGetStatusChange`](https://pcsclite.alioth.debian.org/api/group__API.html#ga33247d5d1257d59e55647c3bb717db24)
@@ -255,7 +276,7 @@ At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/g
 
 ## FAQ
 
-### Can I use this library in my [Electron](https://electron.atom.io/) app?
+### Can I use this library in my [Electron](https://www.electronjs.org/) app?
 
 **Yes, you can!** It works well.
 
@@ -265,6 +286,19 @@ But please read carefully [Using Native Node Modules](https://electron.atom.io/d
 You can use CI/CD server to build your app for certain platforms.  
 For Windows, I recommend you to use [AppVeyor](https://appveyor.com/).  
 For macOS and Linux build, there are plenty of services to choose from, for example [CircleCI](https://circleci.com/), [Travis CI](https://travis-ci.com/) [CodeShip](https://codeship.com/).
+
+### Are prebuilt binaries provided?
+
+No, because it brings more problems than it solves. The C++ code (Node Native Modules, C++ Addons) is built automatically during installation (using [node-gyp](https://github.com/nodejs/node-gyp)).
+
+That means that cross-compilation is not possible by default. If you want to use this library in your [Electron](https://www.electronjs.org/) or [NW.js](https://nwjs.io/), see [Can I use this library in my Electron app?](#can-i-use-this-library-in-my-electron-app).
+
+### Disabling drivers to make pcsclite working on Linux
+
+TODO document
+
+in the meantime see #10
+
 
 ## License
 
