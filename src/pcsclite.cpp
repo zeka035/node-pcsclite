@@ -8,8 +8,6 @@ Nan::Persistent<Function> PCSCLite::constructor;
 
 void PCSCLite::init(Local<Object> target) {
 
-    Local<Context> context = Nan::GetCurrentContext();
-
     // Prepare constructor template
     Local<FunctionTemplate> tpl = Nan::New<FunctionTemplate>(New);
     tpl->SetClassName(Nan::New("PCSCLite").ToLocalChecked());
@@ -19,8 +17,8 @@ void PCSCLite::init(Local<Object> target) {
     Nan::SetPrototypeTemplate(tpl, "close", Nan::New<FunctionTemplate>(Close));
 
 
-    constructor.Reset(tpl->GetFunction(context).ToLocalChecked());
-    target->Set(Nan::New("PCSCLite").ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
+    constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
+    target->Set(Nan::New("PCSCLite").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
 }
 
 PCSCLite::PCSCLite(): m_card_context(0),

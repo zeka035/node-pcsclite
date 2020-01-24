@@ -58,10 +58,8 @@ void CardReader::init(Local<Object> target) {
     Nan::SetPrototypeTemplate(tpl, "SCARD_UNPOWER_CARD", Nan::New(SCARD_UNPOWER_CARD));
     Nan::SetPrototypeTemplate(tpl, "SCARD_EJECT_CARD", Nan::New(SCARD_EJECT_CARD));
 
-    Local <Context> context = Nan::GetCurrentContext();
-
-    constructor.Reset(tpl->GetFunction(context).ToLocalChecked());
-    target->Set(Nan::New("CardReader").ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
+    constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
+    target->Set(Nan::New("CardReader").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
 }
 
 CardReader::CardReader(const std::string &reader_name): m_card_context(0),
@@ -136,11 +134,9 @@ NAN_METHOD(CardReader::Connect) {
         return Nan::ThrowError("Third argument must be a callback function");
     }
 
-    Local<Context> context = Nan::GetCurrentContext();
-
     ConnectInput* ci = new ConnectInput();
-    ci->share_mode = info[0]->Uint32Value(context).FromJust();
-    ci->pref_protocol = info[1]->Uint32Value(context).FromJust();
+    ci->share_mode = Nan::To<uint32_t>(info[0]).FromJust();
+    ci->pref_protocol = Nan::To<uint32_t>(info[1]).FromJust();
     Local<Function> cb = Local<Function>::Cast(info[2]);
 
     // This creates our work request, including the libuv struct.
@@ -174,9 +170,7 @@ NAN_METHOD(CardReader::Disconnect) {
         return Nan::ThrowError("Second argument must be a callback function");
     }
 
-    Local<Context> context = Nan::GetCurrentContext();
-
-    DWORD disposition = info[0]->Uint32Value(context).FromJust();
+    DWORD disposition = Nan::To<uint32_t>(info[0]).FromJust();
     Local<Function> cb = Local<Function>::Cast(info[1]);
 
     // This creates our work request, including the libuv struct.
@@ -222,11 +216,9 @@ NAN_METHOD(CardReader::Transmit) {
         return Nan::ThrowError("Fourth argument must be a callback function");
     }
 
-    Local<Context> context = Nan::GetCurrentContext();
-
     Local<Object> buffer_data = Nan::To<Object>(info[0]).ToLocalChecked();
-    uint32_t out_len = info[1]->Uint32Value(context).FromJust();
-    uint32_t protocol = info[2]->Uint32Value(context).FromJust();
+    uint32_t out_len = Nan::To<uint32_t>(info[1]).FromJust();
+    uint32_t protocol = Nan::To<uint32_t>(info[2]).FromJust();
 
     Local<Function> cb = Local<Function>::Cast(info[3]);
 
@@ -280,10 +272,8 @@ NAN_METHOD(CardReader::Control) {
         return Nan::ThrowError("Fourth argument must be a callback function");
     }
 
-	Local<Context> context = Nan::GetCurrentContext();
-
     Local<Object> in_buf = Nan::To<Object>(info[0]).ToLocalChecked();
-    DWORD control_code = info[1]->Uint32Value(context).FromJust();
+    DWORD control_code = Nan::To<uint32_t>(info[1]).FromJust();
     Local<Object> out_buf = Nan::To<Object>(info[2]).ToLocalChecked();
     Local<Function> cb = Local<Function>::Cast(info[3]);
 
