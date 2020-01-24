@@ -197,7 +197,8 @@ Emitted whenever a new card reader is detected.
 
 #### pcsclite.close()
 
-It frees the resources associated with this PCSCLite instance. At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for new readers.
+It frees the resources associated with this PCSCLite instance. At a low level it
+calls [`SCardCancel`](https://pcsclite.apdu.fr/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for new readers.
 
 #### pcsclite.readers
 
@@ -218,7 +219,7 @@ Emitted when the card reader has been removed.
 #### Event: `status`
 
 * *status* `Object`.
-    * *state* The current status of the card reader as returned by [`SCardGetStatusChange`](https://pcsclite.alioth.debian.org/api/group__API.html#ga33247d5d1257d59e55647c3bb717db24)
+    * *state* The current status of the card reader as returned by [`SCardGetStatusChange`](https://pcsclite.apdu.fr/api/group__API.html#ga33247d5d1257d59e55647c3bb717db24)
     * *atr* ATR of the card inserted (if any)
 
 Emitted whenever the status of the reader changes.
@@ -232,7 +233,7 @@ Emitted whenever the status of the reader changes.
     * *error* `Error`
     * *protocol* `Number` Established protocol to this connection.
 
-Wrapper around [`SCardConnect`](https://pcsclite.alioth.debian.org/api/group__API.html#ga4e515829752e0a8dbc4d630696a8d6a5).
+Wrapper around [`SCardConnect`](https://pcsclite.apdu.fr/api/group__API.html#ga4e515829752e0a8dbc4d630696a8d6a5).
 Establishes a connection to the reader.
 
 #### reader.disconnect(disposition, callback)
@@ -241,7 +242,7 @@ Establishes a connection to the reader.
 * *callback* `Function` called when disconnection operation ends
     * *error* `Error`
 
-Wrapper around [`SCardDisconnect`](https://pcsclite.alioth.debian.org/api/group__API.html#ga4be198045c73ec0deb79e66c0ca1738a).
+Wrapper around [`SCardDisconnect`](https://pcsclite.apdu.fr/api/group__API.html#ga4be198045c73ec0deb79e66c0ca1738a).
 Terminates a connection to the reader.
 
 #### reader.transmit(input, res_len, protocol, callback)
@@ -253,7 +254,7 @@ Terminates a connection to the reader.
     * *error* `Error`
     * *output* `Buffer`
 
-Wrapper around [`SCardTransmit`](https://pcsclite.alioth.debian.org/api/group__API.html#ga9a2d77242a271310269065e64633ab99).
+Wrapper around [`SCardTransmit`](https://pcsclite.apdu.fr/api/group__API.html#ga9a2d77242a271310269065e64633ab99).
 Sends an APDU to the smart card contained in the reader connected to.
 
 #### reader.control(input, control_code, res_len, callback)
@@ -265,13 +266,13 @@ Sends an APDU to the smart card contained in the reader connected to.
     * *error* `Error`
     * *output* `Buffer`
 
-Wrapper around [`SCardControl`](https://pcsclite.alioth.debian.org/api/group__API.html#gac3454d4657110fd7f753b2d3d8f4e32f).
+Wrapper around [`SCardControl`](https://pcsclite.apdu.fr/api/group__API.html#gac3454d4657110fd7f753b2d3d8f4e32f).
 Sends a command directly to the IFD Handler (reader driver) to be processed by the reader.
 
 #### reader.close()
 
 It frees the resources associated with this CardReader instance.
-At a low level it calls [`SCardCancel`](https://pcsclite.alioth.debian.org/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for the reader status changes.
+At a low level it calls [`SCardCancel`](https://pcsclite.apdu.fr/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6) so it stops watching for the reader status changes.
 
 
 ## FAQ
