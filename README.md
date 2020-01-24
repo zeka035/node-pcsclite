@@ -74,7 +74,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
     > apt-get install pcscd
     > ```
 
-3. Once you have all needed libraries, you can install node-pcsclite using npm:
+3. **Once you have all needed libraries, you can install node-pcsclite using npm:**
 
     ```bash
     npm install @pokusew/pcsclite --save
