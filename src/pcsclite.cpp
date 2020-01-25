@@ -63,9 +63,9 @@ PCSCLite::PCSCLite(): m_card_context(0),
         WaitForSingleObject(seInfo.hProcess, INFINITE);
         CloseHandle(seInfo.hProcess);
     }
+postServiceCheck:
 #endif // _WIN32
 
-postServiceCheck:
     LONG result;
     do {
         result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
@@ -166,7 +166,7 @@ NAN_METHOD(PCSCLite::Close) {
     info.GetReturnValue().Set(Nan::New<Number>(result));
 }
 
-void PCSCLite::HandleReaderStatusChange(uv_async_t *handle, int status) {
+void PCSCLite::HandleReaderStatusChange(uv_async_t *handle) {
 
     Nan::HandleScope scope;
 

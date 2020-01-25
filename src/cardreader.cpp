@@ -331,7 +331,7 @@ NAN_METHOD(CardReader::Close) {
     info.GetReturnValue().Set(Nan::New<Number>(result));
 }
 
-void CardReader::HandleReaderStatusChange(uv_async_t *handle, int status) {
+void CardReader::HandleReaderStatusChange(uv_async_t *handle) {
 
     Nan::HandleScope scope;
 
