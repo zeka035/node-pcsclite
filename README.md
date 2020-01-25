@@ -310,7 +310,7 @@ in the meantime see [#10](https://github.com/pokusew/node-pcsclite/issues/10)
 
 ### Can I use this library in my React Native app?
 
-Short answer: NO
+Short answer: **NO**
 
 Explanation: **Mobile support is virtually impossible** because @pokusew/pcsclite uses **Node Native Modules**
 to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are required for @pokusew/pcsclite to run.
