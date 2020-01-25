@@ -47,7 +47,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 
 ## Installation
 
-**Requirements:** **Node.js 8+** (see [this FAQ](#which-nodejs-versions-are-supported) for more info)
+**Requirements:** **at least Node.js 8 or newer** (see [this FAQ](#which-nodejs-versions-are-supported) for more info)
 
 1. **Node Native Modules build tools**
 
@@ -305,7 +305,7 @@ in the meantime see [#10](https://github.com/pokusew/node-pcsclite/issues/10)
 
 ### Which Node.js versions are supported?
 
-@pokusew/pcsclite officially supports **Node.js versions greater than or equal to 8** (i.e. Node.js **8.x, 9.x, 10.x, 11.x, 12.x, 13.x**).
+@pokusew/pcsclite officially supports the following Node.js versions: **8.x, 9.x, 10.x, 11.x, 12.x, 13.x**.
 
 
 ## License
