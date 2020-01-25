@@ -39,6 +39,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
   - [Can I use this library in my Electron app?](#can-i-use-this-library-in-my-electron-app)
   - [Are prebuilt binaries provided?](#are-prebuilt-binaries-provided)
   - [Disabling drivers to make pcsclite working on Linux](#disabling-drivers-to-make-pcsclite-working-on-linux)
+  - [Which Node.js versions are supported?](#which-nodejs-versions-are-supported)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -46,7 +47,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 
 ## Installation
 
-**Supported Node.js versions:** 8.x, 9.x, 10.x, 11.x (12.x and 13.x will be available soon, see [PR #27](https://github.com/pokusew/node-pcsclite/pull/27))
+**Requirements:** **Node.js 8+** (see [this FAQ](#which-nodejs-versions-are-supported) for more info)
 
 1. **Node Native Modules build tools**
 
@@ -301,6 +302,10 @@ That means that cross-compilation is not possible by default. If you want to use
 TODO document
 
 in the meantime see [#10](https://github.com/pokusew/node-pcsclite/issues/10)
+
+### Which Node.js versions are supported?
+
+@pokusew/pcsclite officially supports **Node.js versions greater than or equal to 8** (i.e. Node.js **8.x, 9.x, 10.x, 11.x, 12.x, 13.x**).
 
 
 ## License
