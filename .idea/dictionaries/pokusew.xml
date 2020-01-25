@@ -3,6 +3,8 @@
     <words>
       <w>addons</w>
       <w>doctoc</w>
+      <w>gitignore</w>
+      <w>npmignore</w>
       <w>pcsc</w>
       <w>pcsclite</w>
       <w>picc</w>
