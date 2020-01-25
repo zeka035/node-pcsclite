@@ -40,6 +40,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
   - [Are prebuilt binaries provided?](#are-prebuilt-binaries-provided)
   - [Disabling drivers to make pcsclite working on Linux](#disabling-drivers-to-make-pcsclite-working-on-linux)
   - [Which Node.js versions are supported?](#which-nodejs-versions-are-supported)
+  - [Can I use this library in my React Native app?](#can-i-use-this-library-in-my-react-native-app)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -64,7 +65,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
     On **macOS** and **Windows** you **don't have to install** anything,
     **pcsclite API** is provided by the OS.
     
-    On Linux/UNIX you'd probably need to install pcsclite library and deamon**.
+    On Linux/UNIX you'd probably need to install pcsclite library and daemon**.
 
     > For example, in Debian/Ubuntu:
     > ```bash
@@ -306,6 +307,16 @@ in the meantime see [#10](https://github.com/pokusew/node-pcsclite/issues/10)
 ### Which Node.js versions are supported?
 
 @pokusew/pcsclite officially supports the following Node.js versions: **8.x, 9.x, 10.x, 11.x, 12.x, 13.x**.
+
+### Can I use this library in my React Native app?
+
+Short answer: NO
+
+Explanation: **Mobile support is virtually impossible** because @pokusew/pcsclite uses **Node Native Modules**
+to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are required for @pokusew/pcsclite to run.
+That makes it possible to use it on the most of OS (Windows, macOS, Linux) **directly in Node.js**
+or in **Electron.js and NW.js** desktop apps. On the other hand, these requirements are not normally met on mobile devices.
+On top of that, React Native does not contain any Node.js runtime.
 
 
 ## License
