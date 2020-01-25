@@ -41,7 +41,7 @@ class PCSCLite: public Nan::ObjectWrap {
         static NAN_METHOD(Start);
         static NAN_METHOD(Close);
 
-        static void HandleReaderStatusChange(uv_async_t *handle, int status);
+        static void HandleReaderStatusChange(uv_async_t *handle);
         static void HandlerFunction(void* arg);
         static void CloseCallback(uv_handle_t *handle);
 
@@ -56,6 +56,7 @@ class PCSCLite: public Nan::ObjectWrap {
         uv_cond_t m_cond;
         bool m_pnp;
         int m_state;
+        static Nan::AsyncResource *async_resource;
 };
 
 #endif /* PCSCLITE_H */

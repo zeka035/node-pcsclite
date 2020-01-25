@@ -107,7 +107,7 @@ class CardReader: public Nan::ObjectWrap {
         static NAN_METHOD(Control);
         static NAN_METHOD(Close);
 
-        static void HandleReaderStatusChange(uv_async_t *handle, int status);
+        static void HandleReaderStatusChange(uv_async_t *handle);
         static void HandlerFunction(void* arg);
         static void DoConnect(uv_work_t* req);
         static void DoDisconnect(uv_work_t* req);
@@ -132,6 +132,7 @@ class CardReader: public Nan::ObjectWrap {
         uv_mutex_t m_mutex;
         uv_cond_t m_cond;
         int m_state;
+        static Nan::AsyncResource *async_resource;
 };
 
 #endif /* CARDREADER_H */

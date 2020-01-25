@@ -6,9 +6,9 @@ using namespace node;
 
 Nan::Persistent<Function> PCSCLite::constructor;
 
-void PCSCLite::init(Local<Object> target) {
+Nan::AsyncResource *PCSCLite::async_resource = new Nan::AsyncResource("PCSCLite_StaticAsyncResource");
 
-    Local<Context> context = Nan::GetCurrentContext();
+void PCSCLite::init(Local<Object> target) {
 
     // Prepare constructor template
     Local<FunctionTemplate> tpl = Nan::New<FunctionTemplate>(New);
@@ -19,8 +19,8 @@ void PCSCLite::init(Local<Object> target) {
     Nan::SetPrototypeTemplate(tpl, "close", Nan::New<FunctionTemplate>(Close));
 
 
-    constructor.Reset(tpl->GetFunction(context).ToLocalChecked());
-    target->Set(Nan::New("PCSCLite").ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
+    constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
+    Nan::Set(target, Nan::New("PCSCLite").ToLocalChecked(), Nan::GetFunction(tpl).ToLocalChecked());
 }
 
 PCSCLite::PCSCLite(): m_card_context(0),
@@ -63,9 +63,9 @@ PCSCLite::PCSCLite(): m_card_context(0),
         WaitForSingleObject(seInfo.hProcess, INFINITE);
         CloseHandle(seInfo.hProcess);
     }
+postServiceCheck:
 #endif // _WIN32
 
-postServiceCheck:
     LONG result;
     do {
         result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
@@ -166,7 +166,7 @@ NAN_METHOD(PCSCLite::Close) {
     info.GetReturnValue().Set(Nan::New<Number>(result));
 }
 
-void PCSCLite::HandleReaderStatusChange(uv_async_t *handle, int status) {
+void PCSCLite::HandleReaderStatusChange(uv_async_t *handle) {
 
     Nan::HandleScope scope;
 
@@ -183,10 +183,10 @@ void PCSCLite::HandleReaderStatusChange(uv_async_t *handle, int status) {
             Nan::CopyBuffer(ar->readers_name, ar->readers_name_length).ToLocalChecked()
         };
 
-        Nan::Callback(Nan::New(async_baton->callback)).Call(argc, argv);
+        Nan::Callback(Nan::New(async_baton->callback)).Call(argc, argv, async_resource);
     } else {
         Local<Value> argv[1] = { Nan::Error(ar->err_msg.c_str()) };
-        Nan::Callback(Nan::New(async_baton->callback)).Call(1, argv);
+        Nan::Callback(Nan::New(async_baton->callback)).Call(1, argv, async_resource);
     }
 
     // Do exit, after throwing last events
