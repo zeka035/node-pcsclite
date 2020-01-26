@@ -300,9 +300,34 @@ That means that cross-compilation is not possible by default. If you want to use
 
 ### Disabling drivers to make pcsclite working on Linux
 
-TODO document
+In case there is another driver blocking the usb bus, you won't be able to access the NFC reader until you disable it. First, plug in your reader and check, which driver is being used:
+```console
+$ lsusb -t
+/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/12p, 480M
+    |__ Port 3: Dev 6, If 0, Class=Chip/SmartCard, Driver=pn533, 12M
+        ...
+```
+In my case, there is a `pn533` driver loaded by default. Now find the dependency tree of that driver:
+```console
+$ lsmod | grep pn533
+Module                  Size  Used by
+pn533_usb              20480  0
+pn533                  45056  1 pn533_usb
+nfc                   131072  1 pn533
 
-in the meantime see [#10](https://github.com/pokusew/node-pcsclite/issues/10)
+```
+We see, that there are drivers `nfc`, `pn533` and `pn533_usb` we need to disable. Create file in `/etc/modprobe.d/` with the following content:
+```console
+$ cat /etc/modprobe.d/nfc-blacklist.conf
+blacklist pn533_usb
+blacklist pn533
+blacklist nfc
+```
+After reboot, there will be no driver blocking the usb bus anymore, so we can finally enable and start the pscs deamon:
+```
+# systemctl enable pcscd
+# systemctl start pcscd
+```
 
 ### Which Node.js versions are supported?
 
