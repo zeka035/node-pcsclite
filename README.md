@@ -42,6 +42,8 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
   - [Disabling drivers to make pcsclite working on Linux](#disabling-drivers-to-make-pcsclite-working-on-linux)
   - [Which Node.js versions are supported?](#which-nodejs-versions-are-supported)
   - [Can I use this library in my React Native app?](#can-i-use-this-library-in-my-react-native-app)
+- [Frequent errors](#frequent-errors)
+  - [Error: Cannot find module '../build/Release/pcsclite.node'](#error-cannot-find-module-buildreleasepcsclitenode)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -343,6 +345,34 @@ to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are req
 That makes it possible to use it on the most of OS (Windows, macOS, Linux) **directly in Node.js**
 or in **Electron.js and NW.js** desktop apps. On the other hand, these requirements are not normally met on mobile devices.
 On top of that, React Native does not contain any Node.js runtime.
+
+
+## Frequent errors
+
+### Error: Cannot find module '../build/Release/pcsclite.node'
+
+@pokusew/pcsclite uses **Node Native Modules** (Node.js C++ Addon) to access PC/SC API (pcsclite).
+The Node.js native C++ addon is built during installation via [node-gyp](https://github.com/nodejs/node-gyp)
+(see package.json > scripts > [install](https://github.com/pokusew/node-pcsclite/blob/master/package.json#L37)).
+When you see the error `Cannot find module '../build/Release/pcsclite.node'`, something probably
+**went wrong during the installation**.
+
+Follow the steps below to resolve your problem:
+1. If **there are any errors** in the output of the `npm install` resp. `yarn install`,
+    * **ensure you meet all the requirements** described in the [Installation](#installation) section of this README.
+        Then try reinstalling @pokusew/pcsclite (npm uninstall / yarn remove and then npm install / yarn add).
+    * **If the problem persists**, [open a new issue](https://github.com/pokusew/node-pcsclite/issues/new)
+        and be sure to include the output of the `npm install` resp. `yarn install`
+        and the details about your platform, OS, Node.js version and npm/yarn version.
+2. If **there are no errors** during the installation,
+    * then try reinstalling @pokusew/pcsclite (npm uninstall / yarn remove and then npm install / yarn add).
+    * If it does not help, then examine the contents of the folder `node_modules/@pokusew/pcsclite` in your project
+        (in case you installed @pokusew/pcsclite as a dependency). There should be a `build` folder with
+        a `Release` folder inside. In the `Release` folder, there should be a `pcsclite.node` file.
+        It is possible that this file is somewhere else. Whether you find the file somewhere or not,
+        please [open a new issue](https://github.com/pokusew/node-pcsclite/issues/new)
+        and describe the problem and be sure to include the details
+        about your platform, OS, Node.js version and npm/yarn version.
 
 
 ## License
