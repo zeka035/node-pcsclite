@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@pokusew/pcsclite.svg)](https://www.npmjs.com/package/@pokusew/pcsclite)
 [![build status](https://img.shields.io/github/workflow/status/pokusew/node-pcsclite/CI?logo=github)](https://github.com/pokusew/node-pcsclite/actions?query=workflow%3ACI)
-[![node-pcsclite channel on discord](https://img.shields.io/badge/discord-join%20chat-61dafb.svg)](https://discord.gg/bg3yazg)
+[![node-pcsclite channel on discord](https://img.shields.io/badge/discord-join%20chat-61dafb.svg?logo=discord&logoColor=white)](https://discord.gg/bg3yazg)
 
 Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** and **Windows**.
 
