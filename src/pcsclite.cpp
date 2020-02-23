@@ -70,6 +70,7 @@ postServiceCheck:
     LONG result;
     // TODO: consider removing this do-while Windows workaround that should not be needed anymore
     do {
+        // TODO: make dwScope (now hard-coded to SCARD_SCOPE_SYSTEM) customisable
         result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
                                             NULL,
                                             NULL,
