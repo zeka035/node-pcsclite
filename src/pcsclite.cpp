@@ -31,6 +31,7 @@ PCSCLite::PCSCLite(): m_card_context(0),
     assert(uv_mutex_init(&m_mutex) == 0);
     assert(uv_cond_init(&m_cond) == 0);
 
+    // TODO: consider removing this Windows workaround that should not be needed anymore
 #ifdef _WIN32
     HKEY hKey;
     DWORD startStatus, datacb = sizeof(DWORD);
@@ -67,6 +68,7 @@ postServiceCheck:
 #endif // _WIN32
 
     LONG result;
+    // TODO: consider removing this do-while Windows workaround that should not be needed anymore
     do {
         result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
                                             NULL,
