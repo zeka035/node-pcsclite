@@ -31,7 +31,6 @@ PCSCLite::PCSCLite(): m_card_context(0),
     assert(uv_mutex_init(&m_mutex) == 0);
     assert(uv_cond_init(&m_cond) == 0);
 
-    // TODO: consider removing this Windows workaround that should not be needed anymore
 #ifdef _WIN32
     HKEY hKey;
     DWORD startStatus, datacb = sizeof(DWORD);
@@ -68,14 +67,18 @@ postServiceCheck:
 #endif // _WIN32
 
     LONG result;
-    // TODO: consider removing this do-while Windows workaround that should not be needed anymore
+    int numRetries = 3;
     do {
-        // TODO: make dwScope (now hard-coded to SCARD_SCOPE_SYSTEM) customisable
         result = SCardEstablishContext(SCARD_SCOPE_SYSTEM,
                                             NULL,
                                             NULL,
                                             &m_card_context);
-    } while(result == SCARD_E_NO_SERVICE || result == SCARD_E_SERVICE_STOPPED);
+
+                                            if(result != SCARD_S_SUCCESS) {
+                                              numRetries++;
+                                              Sleep(750);
+                                            }
+    } while((result == SCARD_E_NO_SERVICE || result == SCARD_E_SERVICE_STOPPED) && numRetries < 3);
     if (result != SCARD_S_SUCCESS) {
         Nan::ThrowError(error_msg("SCardEstablishContext", result).c_str());
     } else {
